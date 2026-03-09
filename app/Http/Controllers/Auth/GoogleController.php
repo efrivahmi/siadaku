@@ -20,14 +20,14 @@ class GoogleController extends Controller
         try {
             $googleUser = Socialite::driver('google')->user();
 
-            $user = User::where('email', $googleUser->email)->first();
+            $user = User::where('email', $googleUser->getEmail())->first();
 
             if ($user && $user->is_active) {
                 // Update google id if it's missing
                 if (!$user->google_id) {
                     $user->update([
-                        'google_id' => $googleUser->id,
-                        'profile_photo' => $googleUser->avatar
+                        'google_id' => $googleUser->getId(),
+                        'profile_photo' => $googleUser->getAvatar()
                     ]);
                 }
                 Auth::login($user);

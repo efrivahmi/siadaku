@@ -6,5 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class AcademicYear extends Model
 {
-    //
+    protected $fillable = [
+        'year_name',
+        'semester',
+        'is_active',
+    ];
+
+    public function classes()
+    {
+        return $this->hasMany(ClassRoom::class);
+    }
 }
